@@ -32,7 +32,7 @@ export declare interface Modal {
 }
 
 
-export const enum ModalSize {
+export declare enum ModalSize {
   SMALL = "modal-sm",
   LARGE = "modal-lg",
   XLARGE = "modal-xl",
