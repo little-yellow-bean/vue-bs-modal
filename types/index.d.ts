@@ -18,9 +18,9 @@ export declare interface ModalOption {
 }
 
 export declare interface ModalRef {
-    close: () => void;
-  }
-  
+  close: () => void;
+}
+
 export declare interface ModalReturn {
   confirmed: boolean;
   modalRef: ModalRef;
@@ -42,6 +42,12 @@ export declare enum ModalSize {
   FULL_SCREEN_XXL = "modal-fullscreen-xxl-down",
 }
 
+declare module "vue/types/vue" {
+  interface Vue {
+    $modal: Modal;
+  }
+}
+
 declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
     $modal: Modal;
@@ -49,7 +55,7 @@ declare module "@vue/runtime-core" {
 }
 
 declare const _default: {
-    install: (app: App) => void;
+  install: (app: App) => void;
 };
 
 export default _default;
