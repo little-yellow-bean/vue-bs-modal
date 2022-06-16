@@ -30,7 +30,9 @@ export declare interface Modal {
   confirm: (options?: ConfirmOption, el?: HTMLElement) => Promise<boolean>;
   show: (options: ModalOption, el?: HTMLElement) => Promise<ModalReturn>;
 }
-export declare enum ModalSize {
+
+
+export const enum ModalSize {
   SMALL = "modal-sm",
   LARGE = "modal-lg",
   XLARGE = "modal-xl",

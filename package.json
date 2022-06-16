@@ -1,7 +1,7 @@
 {
   "name": "vue-bs-modal",
   "description": "A Bootstrap style Vue.js modal",
-  "version": "0.2.4",
+  "version": "0.2.6",
   "private": false,
   "author": {
     "name": "YellowBean",
@@ -19,7 +19,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build-lib": "vue-cli-service build --target lib --name index ./src/index.ts",
+    "build-lib": "vue-cli-service build --target lib --name vue-bs-modal ./src/index.ts",
     "lint": "vue-cli-service lint"
   },
   "devDependencies": {
@@ -34,7 +34,8 @@
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "typescript": "~4.5.5",
-    "vue": "^3.2.13"
+    "vue": "^3.2.13",
+    "bootstrap-icons": "^1.8.3"
   },
   "peerDependencies": {
     "bootstrap-icons": "^1.8.3",
@@ -42,11 +43,10 @@
     "vue": "^3.2.13"
   },
   "dependencies": {
-    "bootstrap": "^5.1.3",
-    "bootstrap-icons": "^1.8.3"
+    "bootstrap": "^5.1.3"
   },
-  "main": "dist/index.common.js",
-  "browser": "dist/index.umd.min.js",
+  "main": "dist/vue-bs-modal.common.js",
+  "browser": "dist/vue-bs-modal.umd.min.js",
   "files": [
     "dist",
     "types"

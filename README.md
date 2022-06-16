@@ -16,8 +16,13 @@ npm install vue-bs-modal
 import { createApp } from "vue";
 import App from "./App.vue";
 import Modal from "vue-bs-modal";
+// import css
+import "vue-bs-modal/dist/vue-bs-modal.css";
+// import bootstrap
 import "bootstrap/dist/css/bootstrap.min.css"
+// import icon (this is not required)
 import "bootstrap-icons/font/bootstrap-icons.css";
+
 
 const app = createApp(App);
 app.use(Modal).mount("#app");
