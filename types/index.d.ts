@@ -42,8 +42,8 @@ export declare enum ModalSize {
   FULL_SCREEN_XXL = "modal-fullscreen-xxl-down",
 }
 
-declare module "vue/types/vue" {
-  interface Vue {
+declare module "@vue/runtime-core" {
+  interface ComponentCustomProperties {
     $modal: Modal;
   }
 }
