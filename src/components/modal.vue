@@ -66,7 +66,7 @@ import {
   PropType,
   VNode,
 } from "vue";
-import { ModalRef, ContentRef, ModalSize } from "./model";
+import { ModalRef, ContentRef, ModalSize } from "../models/model";
 interface Data {
   defaultTitle: string;
   defaultMessage: string;

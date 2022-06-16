@@ -5,7 +5,7 @@ import {
   render,
   VNode,
 } from "vue";
-import ModalComponent from "./modal.vue";
+import ModalComponent from "../components/modal.vue";
 import {
   ConfirmOption,
   Modal,
@@ -13,7 +13,7 @@ import {
   ModalRef,
   ModalReturn,
   MODAL_DELAY,
-} from "./model";
+} from "../models/model";
 
 function confirm(
   options?: ConfirmOption,
