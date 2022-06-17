@@ -7,7 +7,8 @@
         tabindex="-1"
         aria-modal="true"
         role="dialog"
-        @click="onBackdropClick($event)"
+        @mousedown.self="setInitialTarget($event)"
+        @mouseup.self="onBackdropClick($event)"
       >
         <div class="modal-dialog" :class="getDialogClass()">
           <div class="modal-content">
@@ -17,7 +18,7 @@
                 type="button"
                 class="btn-close"
                 aria-label="Close"
-                @click="onCloseBtnClick"
+                @click.self="onCloseBtnClick"
                 v-if="displayCloseBtn"
               ></button>
             </div>
@@ -35,7 +36,7 @@
               <button
                 type="button"
                 class="btn btn-secondary"
-                @click="onLeftBtnClick"
+                @click.self="onLeftBtnClick"
                 v-if="displayLeftBtn"
               >
                 {{ leftBtnText }}
@@ -43,7 +44,7 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                @click="onRightBtnClick"
+                @click.self="onRightBtnClick"
                 v-if="displayRightBtn"
               >
                 {{ rightBtnText }}
@@ -74,6 +75,7 @@ interface Data {
   show: boolean;
   out: boolean;
   contentRef: ContentRef | undefined;
+  initialTarget: HTMLElement | undefined;
 }
 
 const MODAL_CENTTER_CLASS = "modal-dialog-centered";
@@ -90,6 +92,7 @@ export default defineComponent({
       show: false,
       out: false,
       contentRef: undefined,
+      initialTarget: undefined,
     };
   },
   props: {
@@ -189,8 +192,16 @@ export default defineComponent({
       }
     },
 
+    setInitialTarget(event: MouseEvent) {
+      this.initialTarget = event.target as HTMLElement;
+    },
+
     onBackdropClick(event: MouseEvent) {
-      if ((event.target as HTMLElement)?.classList?.contains(MODAL_CLASS)) {
+      const finalTarget = event.target as HTMLElement;
+      if (
+        finalTarget?.classList?.contains(MODAL_CLASS) &&
+        finalTarget === this.initialTarget
+      ) {
         this.onCloseBtnClick();
       }
     },
