@@ -65,6 +65,10 @@ function renderModal(props: Record<string, unknown>, el: HTMLElement) {
   render(vnode, el);
 }
 
+export function setCurrentAppContext(context: AppContext) {
+  _context = context;
+}
+
 export const modal: Modal = {
   confirm,
   show,
