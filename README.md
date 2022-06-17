@@ -82,4 +82,4 @@ app.use(Modal).mount("#app");
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://github.com/little-yellow-bean/vue-bs-modal/blob/main/LICENSE)
