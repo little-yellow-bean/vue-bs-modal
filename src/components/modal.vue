@@ -26,7 +26,8 @@
               <span
                 v-if="!content"
                 class="d-flex justify-content-center align-items-center flex-column confirm-message"
-                ><i :class="icon"></i><span>{{ message }}</span></span
+                ><i :class="icon"></i
+                ><span class="text-center">{{ message }}</span></span
               >
               <template v-if="content">
                 <span ref="content"> </span>
