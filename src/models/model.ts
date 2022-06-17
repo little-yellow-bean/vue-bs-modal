@@ -17,6 +17,11 @@ export interface ModalOption {
   size?: ModalSize;
   contentProps?: Record<string, unknown>;
   center?: boolean;
+  displayHeader?: boolean;
+  displayFooter?: boolean;
+  displayCloseBtn?: boolean;
+  displayLeftBtn?: boolean;
+  displayRightBtn?: boolean;
 }
 
 export interface ModalRef {

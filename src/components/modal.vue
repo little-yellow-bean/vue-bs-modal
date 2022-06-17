@@ -11,40 +11,42 @@
       >
         <div class="modal-dialog" :class="getDialogClass()">
           <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">{{ title || defaultTitle }}</h5>
+            <div class="modal-header" v-if="displayHeader">
+              <h5 class="modal-title">{{ title }}</h5>
               <button
                 type="button"
                 class="btn-close"
                 aria-label="Close"
                 @click="onCloseBtnClick"
+                v-if="displayCloseBtn"
               ></button>
             </div>
             <div class="modal-body">
               <span
                 v-if="!content"
                 class="d-flex justify-content-center align-items-center flex-column confirm-message"
-                ><i :class="icon || defaultIcon"></i
-                ><span>{{ message || defaultMessage }}</span></span
+                ><i :class="icon"></i><span>{{ message }}</span></span
               >
               <template v-if="content">
                 <span ref="content"> </span>
               </template>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" v-if="displayFooter">
               <button
                 type="button"
                 class="btn btn-secondary"
                 @click="onLeftBtnClick"
+                v-if="displayLeftBtn"
               >
-                {{ leftBtnText || defaultLeftBtnText }}
+                {{ leftBtnText }}
               </button>
               <button
                 type="button"
                 class="btn btn-primary"
                 @click="onRightBtnClick"
+                v-if="displayRightBtn"
               >
-                {{ rightBtnText || defaultRightBtnText }}
+                {{ rightBtnText }}
               </button>
             </div>
           </div>
@@ -68,11 +70,6 @@ import {
 } from "vue";
 import { ModalRef, ContentRef, ModalSize } from "../models/model";
 interface Data {
-  defaultTitle: string;
-  defaultMessage: string;
-  defaultLeftBtnText: string;
-  defaultRightBtnText: string;
-  defaultIcon: string;
   show: boolean;
   out: boolean;
   contentRef: ContentRef | undefined;
@@ -86,14 +83,9 @@ const FADE_IN_DOWN_CLASS = "dialog-fadeInDown";
 const FADE_OUT_UP_CLASS = "dialog-fadeOutUp";
 
 export default defineComponent({
-  name: "DialogComponent",
+  name: "ModalComponent",
   data(): Data {
     return {
-      defaultTitle: "Confirmation",
-      defaultMessage: "Do you want to do this action?",
-      defaultLeftBtnText: "Cancel",
-      defaultRightBtnText: "Confirm",
-      defaultIcon: "bi bi-question-circle-fill",
       show: false,
       out: false,
       contentRef: undefined,
@@ -102,25 +94,50 @@ export default defineComponent({
   props: {
     title: {
       type: String as PropType<string>,
+      default: "Confirmation",
     },
     message: {
       type: String as PropType<string>,
+      default: "Do you want to do this action?",
     },
     icon: {
       type: String as PropType<string>,
+      default: "bi bi-question-circle-fill",
     },
     size: {
       type: String as PropType<ModalSize>,
     },
     leftBtnText: {
       type: String as PropType<string>,
+      default: "Cancel",
     },
     rightBtnText: {
       type: String as PropType<string>,
+      default: "Confirm",
     },
     center: {
       type: Boolean as PropType<boolean>,
       default: false,
+    },
+    displayHeader: {
+      type: Boolean as PropType<boolean>,
+      default: true,
+    },
+    displayFooter: {
+      type: Boolean as PropType<boolean>,
+      default: true,
+    },
+    displayCloseBtn: {
+      type: Boolean as PropType<boolean>,
+      default: true,
+    },
+    displayLeftBtn: {
+      type: Boolean as PropType<boolean>,
+      default: true,
+    },
+    displayRightBtn: {
+      type: Boolean as PropType<boolean>,
+      default: true,
     },
     content: {
       type: Object as PropType<Component>,
@@ -133,11 +150,11 @@ export default defineComponent({
       required: true,
     },
     resolve: {
-      type: Function,
+      type: Function as PropType<(value: unknown) => void>,
       required: true,
     },
     reject: {
-      type: Function,
+      type: Function as PropType<(reason: unknown) => void>,
       required: true,
     },
   },
@@ -154,21 +171,14 @@ export default defineComponent({
   },
   methods: {
     onRightBtnClick() {
-      const resolvedValue = this.content
-        ? {
-            confirmed: true,
-            modalRef: this.modalRef,
-            data: this.contentRef?.internalComponentVNode?.component?.data,
-          }
-        : true;
+      this.onResolve(true);
       if (!this.content) {
         this.closeModal();
       }
-      this.resolve?.(resolvedValue);
     },
 
     onLeftBtnClick() {
-      this.onCloseBtnsResolve();
+      this.onResolve(false);
       if (!this.content) {
         this.closeModal();
       }
@@ -181,29 +191,30 @@ export default defineComponent({
     },
 
     onCloseBtnClick() {
-      this.onCloseBtnsResolve();
+      this.onResolve(false);
       this.closeModal();
     },
 
-    onCloseBtnsResolve() {
+    onResolve(confirmed: boolean) {
       const resolvedValue = this.content
         ? {
-            confirmed: false,
+            confirmed,
             modalRef: this.modalRef,
             data: this.contentRef?.internalComponentVNode?.component?.data,
           }
-        : false;
-      this.resolve?.(resolvedValue);
+        : confirmed;
+      this.resolve(resolvedValue);
     },
 
     closeModal() {
-      this.modalRef?.close();
+      this.modalRef.close();
     },
 
     renderContent() {
       const el = this.$refs.content as HTMLElement;
       const props = {
         ...this.contentProps,
+        modalRef: this.modalRef,
       };
       let vnode: VNode | undefined = createVNode(
         this.content as Component,

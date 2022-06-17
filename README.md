@@ -16,13 +16,10 @@ npm install vue-bs-modal
 import { createApp } from "vue";
 import App from "./App.vue";
 import Modal from "vue-bs-modal";
-// import css
-import "vue-bs-modal/dist/vue-bs-modal.css";
-// import bootstrap
-import "bootstrap/dist/css/bootstrap.min.css"
+
+import "bootstrap/dist/css/bootstrap.min.css";
 // import icon (this is not required)
 import "bootstrap-icons/font/bootstrap-icons.css";
-
 
 const app = createApp(App);
 app.use(Modal).mount("#app");
@@ -54,7 +51,8 @@ app.use(Modal).mount("#app");
           rightBtnText: "Update",
           leftBtnText: "Discard",
           size: ModalSize.LARGE,
-          // pass data as props to the EditProfileComponent.
+          // pass custom data as props to the EditProfileComponent.
+          // the "modalRef" prop is passed to the content componet by default in case you want to close the modal inside your component.
           contentProps: {
             email: "example@example.com",
             username: "yellowbean"
@@ -62,7 +60,7 @@ app.use(Modal).mount("#app");
           center: true,
         })
         .then(({ confirmed, modalRef, data }) => {
-          // confirmed will be true for right button click, false for left button click.
+          // confirmed will be true for right button click, false for left button or close button or backdrop click.
           // data will be the data field of the EditProfileComponent.
           if (confirmed) {
             // do something

@@ -15,6 +15,11 @@ export declare interface ModalOption {
   size?: ModalSize;
   contentProps?: Record<string, unknown>;
   center?: boolean;
+  displayHeader?: boolean;
+  displayFooter?: boolean;
+  displayCloseBtn?: boolean;
+  displayLeftBtn?: boolean;
+  displayRightBtn?: boolean;
 }
 
 export declare interface ModalRef {
@@ -30,7 +35,6 @@ export declare interface Modal {
   confirm: (options?: ConfirmOption, el?: HTMLElement) => Promise<boolean>;
   show: (options: ModalOption, el?: HTMLElement) => Promise<ModalReturn>;
 }
-
 
 export declare enum ModalSize {
   SMALL = "modal-sm",
