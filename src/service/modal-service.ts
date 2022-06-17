@@ -10,11 +10,14 @@ import {
 import ModalComponent from "../components/modal.vue";
 import {
   ConfirmOption,
+  CONFIRM_OPTION_KEYS,
+  INVALID_OPTIONS,
   Modal,
   ModalOption,
   ModalRef,
   ModalReturn,
   MODAL_DELAY,
+  MODAL_OPTION_KEYS,
 } from "../models/model";
 
 let _context: AppContext;
@@ -23,6 +26,9 @@ function confirm(
   options?: ConfirmOption,
   el: HTMLElement = document.body
 ): Promise<boolean> {
+  if (!isConfirmOption(options)) {
+    throw new Error(INVALID_OPTIONS);
+  }
   return new Promise((resolve, reject) => {
     const props = {
       ...options,
@@ -37,6 +43,9 @@ function show(
   options: ModalOption,
   el: HTMLElement = document.body
 ): Promise<ModalReturn> {
+  if (!isCommonModalOption(options)) {
+    throw new Error(INVALID_OPTIONS);
+  }
   return new Promise((resolve, reject) => {
     const props = {
       ...options,
@@ -63,6 +72,23 @@ function renderModal(props: Record<string, unknown>, el: HTMLElement) {
   };
   vnode.props = { ...vnode.props, context: _context, modalRef };
   render(vnode, el);
+}
+
+function isConfirmOption(
+  options: ConfirmOption = {}
+): options is ConfirmOption {
+  return isSubArray(CONFIRM_OPTION_KEYS, Object.keys(options));
+}
+
+function isCommonModalOption(options: ModalOption): options is ModalOption {
+  if (!options?.content || !options?.title) {
+    return false;
+  }
+  return isSubArray(MODAL_OPTION_KEYS, Object.keys(options));
+}
+
+function isSubArray(main: unknown[], sub: unknown[]): boolean {
+  return sub.every((val) => main.includes(val));
 }
 
 export function setCurrentAppContext(context: AppContext) {
