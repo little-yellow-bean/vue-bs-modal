@@ -49,7 +49,7 @@ function show(
 
 function renderModal(props: Record<string, unknown>, el: HTMLElement) {
   let vnode: VNode | undefined = createVNode(ModalComponent, props);
-  vnode.appContext = { ..._context };
+  vnode.appContext = _context;
   const modalRef: ModalRef = {
     close() {
       const component = (vnode as VNode)
@@ -61,7 +61,7 @@ function renderModal(props: Record<string, unknown>, el: HTMLElement) {
       }, MODAL_DELAY);
     },
   };
-  vnode.props = { ...vnode.props, context: { ..._context }, modalRef };
+  vnode.props = { ...vnode.props, context: _context, modalRef };
   render(vnode, el);
 }
 
