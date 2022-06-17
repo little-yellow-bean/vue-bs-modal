@@ -67,6 +67,7 @@ import {
   defineComponent,
   PropType,
   VNode,
+  AppContext,
 } from "vue";
 import { ModalRef, ContentRef, ModalSize } from "../models/model";
 interface Data {
@@ -157,6 +158,10 @@ export default defineComponent({
       type: Function as PropType<(reason: unknown) => void>,
       required: true,
     },
+    context: {
+      type: Object as PropType<AppContext>,
+      required: true,
+    },
   },
   created() {
     this.show = true;
@@ -220,7 +225,7 @@ export default defineComponent({
         this.content as Component,
         props
       );
-
+      vnode.appContext = this.context;
       this.contentRef = {
         clear: () => {
           render(null, el);

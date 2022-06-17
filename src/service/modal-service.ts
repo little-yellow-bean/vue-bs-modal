@@ -1,10 +1,12 @@
 import {
   App,
+  AppContext,
   ComponentInternalInstance,
   createVNode,
   render,
   VNode,
 } from "vue";
+
 import ModalComponent from "../components/modal.vue";
 import {
   ConfirmOption,
@@ -14,6 +16,8 @@ import {
   ModalReturn,
   MODAL_DELAY,
 } from "../models/model";
+
+let _context: AppContext;
 
 function confirm(
   options?: ConfirmOption,
@@ -45,6 +49,7 @@ function show(
 
 function renderModal(props: Record<string, unknown>, el: HTMLElement) {
   let vnode: VNode | undefined = createVNode(ModalComponent, props);
+  vnode.appContext = { ..._context };
   const modalRef: ModalRef = {
     close() {
       const component = (vnode as VNode)
@@ -56,7 +61,7 @@ function renderModal(props: Record<string, unknown>, el: HTMLElement) {
       }, MODAL_DELAY);
     },
   };
-  vnode.props = { ...vnode.props, modalRef };
+  vnode.props = { ...vnode.props, context: { ..._context }, modalRef };
   render(vnode, el);
 }
 
@@ -67,6 +72,7 @@ export const modal: Modal = {
 
 export default {
   install(app: App) {
+    _context = app._context;
     app.config.globalProperties.$modal = modal;
   },
 };
