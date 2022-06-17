@@ -204,6 +204,7 @@ export default defineComponent({
       ) {
         this.onCloseBtnClick();
       }
+      this.initialTarget = undefined;
     },
 
     onCloseBtnClick() {
