@@ -7,8 +7,8 @@
         tabindex="-1"
         aria-modal="true"
         role="dialog"
-        @mousedown="setInitialTarget($event)"
-        @mouseup="onBackdropClick($event)"
+        @mousedown.left="setInitialTarget($event)"
+        @mouseup.left="onBackdropClick($event)"
       >
         <div class="modal-dialog" :class="getDialogClass()">
           <div class="modal-content">
