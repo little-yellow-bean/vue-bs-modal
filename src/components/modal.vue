@@ -294,10 +294,11 @@ export default defineComponent({
 }
 
 .bs-dialog-animated {
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-duration: var(1);
-  animation-duration: var(1);
+  --animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -webkit-animation-duration: var(--animation-duration);
+  animation-duration: var(--animation-duration);
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
