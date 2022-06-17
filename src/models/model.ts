@@ -2,7 +2,14 @@ import { Component, VNode } from "vue";
 
 export const MODAL_DELAY = 500;
 
-export const CONFIRM_OPTION_KEYS = ["title", "message", "icon", "center"];
+export const CONFIRM_OPTION_KEYS = [
+  "title",
+  "message",
+  "icon",
+  "center",
+  "leftBtnText",
+  "rightBtnText",
+];
 
 export const MODAL_OPTION_KEYS = [
   "title",
@@ -26,6 +33,8 @@ export interface ConfirmOption {
   message?: string;
   icon?: string;
   center?: boolean;
+  leftBtnText?: string;
+  rightBtnText?: string;
 }
 
 export interface ModalOption {

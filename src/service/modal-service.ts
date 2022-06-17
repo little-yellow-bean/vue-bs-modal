@@ -21,6 +21,7 @@ import {
 } from "../models/model";
 
 let _context: AppContext;
+let _currentModalRef: ModalRef | undefined;
 
 function confirm(
   options?: ConfirmOption,
@@ -57,6 +58,15 @@ function show(
 }
 
 function renderModal(props: Record<string, unknown>, el: HTMLElement) {
+  if (_currentModalRef) {
+    _currentModalRef.close();
+    setTimeout(() => _renderModal(props, el), MODAL_DELAY);
+  } else {
+    _renderModal(props, el);
+  }
+}
+
+function _renderModal(props: Record<string, unknown>, el: HTMLElement) {
   let vnode: VNode | undefined = createVNode(ModalComponent, props);
   vnode.appContext = _context;
   const modalRef: ModalRef = {
@@ -65,11 +75,13 @@ function renderModal(props: Record<string, unknown>, el: HTMLElement) {
         ?.component as ComponentInternalInstance;
       component.data.out = true;
       setTimeout(() => {
+        _currentModalRef = undefined;
         render(null, el);
         vnode = undefined;
       }, MODAL_DELAY);
     },
   };
+  _currentModalRef = modalRef;
   vnode.props = { ...vnode.props, context: _context, modalRef };
   render(vnode, el);
 }

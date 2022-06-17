@@ -5,6 +5,8 @@ export declare interface ConfirmOption {
   message?: string;
   icon?: string;
   center?: boolean;
+  leftBtnText?: string;
+  rightBtnText?: string;
 }
 
 export declare interface ModalOption {
