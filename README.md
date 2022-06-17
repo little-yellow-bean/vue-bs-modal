@@ -1,6 +1,11 @@
 # vue-bs-modal
 
-A Bootstrap modal for Vue.js
+A Bootstrap style modal for Vue.js
+
+<a style="color:#00d1a1;font-weight:700;font-size:20px" href="http://vue-bs-modal.yellowbean.top"
+        target="_blank">
+Demo
+</a>
 
 ## Installation
 
@@ -18,7 +23,7 @@ import App from "./App.vue";
 import Modal from "vue-bs-modal";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-// import icon (this is not required)
+// import icon (this is not required, you can use your own icon class)
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const app = createApp(App);
