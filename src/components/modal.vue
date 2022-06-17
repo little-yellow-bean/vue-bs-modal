@@ -7,8 +7,8 @@
         tabindex="-1"
         aria-modal="true"
         role="dialog"
-        @mousedown.self="setInitialTarget($event)"
-        @mouseup.self="onBackdropClick($event)"
+        @mousedown="setInitialTarget($event)"
+        @mouseup="onBackdropClick($event)"
       >
         <div class="modal-dialog" :class="getDialogClass()">
           <div class="modal-content">
@@ -18,7 +18,7 @@
                 type="button"
                 class="btn-close"
                 aria-label="Close"
-                @click.self="onCloseBtnClick"
+                @click="onCloseBtnClick"
                 v-if="displayCloseBtn"
               ></button>
             </div>
@@ -36,7 +36,7 @@
               <button
                 type="button"
                 class="btn btn-secondary"
-                @click.self="onLeftBtnClick"
+                @click="onLeftBtnClick"
                 v-if="displayLeftBtn"
               >
                 {{ leftBtnText }}
@@ -44,7 +44,7 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                @click.self="onRightBtnClick"
+                @click="onRightBtnClick"
                 v-if="displayRightBtn"
               >
                 {{ rightBtnText }}
@@ -204,7 +204,6 @@ export default defineComponent({
       ) {
         this.onCloseBtnClick();
       }
-      this.initialTarget = undefined;
     },
 
     onCloseBtnClick() {
