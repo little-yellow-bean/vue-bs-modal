@@ -22,8 +22,9 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import Modal from "vue-bs-modal";
 
+// you have to import bootstrap css.
 import "bootstrap/dist/css/bootstrap.min.css";
-// import icon (this is not required, you can use your own icon class)
+// import bootstrap icons (this is not required, you can use your own icon class)
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const app = createApp(App);
