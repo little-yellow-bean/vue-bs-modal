@@ -72,13 +72,13 @@ function _renderModal(props: Record<string, unknown>, el: HTMLElement) {
   const modalRef: ModalRef = {
     closed: false,
     close() {
-      if (!this.closed) {
+      if (this.closed) {
         return;
       }
       const component = (vnode as VNode)
         ?.component as ComponentInternalInstance;
-      component.data.out = true;
       this.closed = true;
+      component.data.out = true;
       setTimeout(() => {
         _currentModalRef = undefined;
         render(null, el);
@@ -90,7 +90,7 @@ function _renderModal(props: Record<string, unknown>, el: HTMLElement) {
   vnode.props = {
     ...vnode.props,
     context: _context,
-    modalRef: { ...modalRef },
+    modalRef,
   };
   render(vnode, el);
 }

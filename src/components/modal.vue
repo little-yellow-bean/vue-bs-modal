@@ -300,7 +300,7 @@ export default defineComponent({
           }
         }
         resolvedValue = {
-          modalRef: { ...this.modalRef },
+          modalRef: this.modalRef,
           action,
           data,
         };
@@ -316,7 +316,7 @@ export default defineComponent({
       const el = this.$refs.content as HTMLElement;
       const props = {
         ...this.contentProps,
-        modalRef: { ...this.modalRef },
+        modalRef: this.modalRef,
       };
       const component =
         typeof this.content === "string"
