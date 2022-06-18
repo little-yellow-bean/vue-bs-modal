@@ -1,7 +1,7 @@
 {
   "name": "vue-bs-modal",
   "description": "A Bootstrap style Vue.js modal",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "private": false,
   "author": {
     "name": "YellowBean",
@@ -9,11 +9,16 @@
   },
   "repository": "https://github.com/little-yellow-bean/vue-bs-modal",
   "keywords": [
+    "Modal",
+    "Dialog",
+    "Vue Bootstrap Modal",
+    "Vue Bootstrap Dialog",
+    "Vue Modal",
+    "Vue Dialog",
     "Vue",
     "Vue.js",
+    "Vue3",
     "Bootstrap",
-    "Modal",
-    "Dialog"
   ],
   "license": "MIT",
   "scripts": {
