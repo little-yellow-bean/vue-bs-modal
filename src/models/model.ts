@@ -67,6 +67,7 @@ export interface ModalOption {
 }
 
 export interface ModalRef {
+  closed: boolean;
   readonly close: () => void;
 }
 

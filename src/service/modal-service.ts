@@ -70,10 +70,15 @@ function _renderModal(props: Record<string, unknown>, el: HTMLElement) {
   let vnode: VNode | undefined = createVNode(ModalComponent, props);
   vnode.appContext = _context;
   const modalRef: ModalRef = {
+    closed: false,
     close() {
+      if (!this.closed) {
+        return;
+      }
       const component = (vnode as VNode)
         ?.component as ComponentInternalInstance;
       component.data.out = true;
+      this.closed = true;
       setTimeout(() => {
         _currentModalRef = undefined;
         render(null, el);
