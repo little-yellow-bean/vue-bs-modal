@@ -81,7 +81,7 @@ app.use(Modal).mount("#app");
           }
 
           // need to manually close the modal if you click the left/right button.
-          // or you can set the autoClose configration
+          // or you can set the autoClose configuration
           modalRef.close();
         });
     },
