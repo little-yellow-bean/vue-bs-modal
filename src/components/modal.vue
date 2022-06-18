@@ -267,7 +267,7 @@ export default defineComponent({
         );
       }
       let vnode: VNode | undefined = createVNode(
-        this.content as Component,
+        component,
         props
       );
       vnode.appContext = this.context;
