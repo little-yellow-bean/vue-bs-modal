@@ -1,7 +1,7 @@
 {
   "name": "vue-bs-modal",
   "description": "A Bootstrap style Vue.js modal",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "private": false,
   "author": {
     "name": "YellowBean",

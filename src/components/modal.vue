@@ -70,6 +70,7 @@ import {
   PropType,
   VNode,
   AppContext,
+  resolveComponent,
 } from "vue";
 import { ModalRef, ContentRef, ModalSize } from "../models/model";
 interface Data {
@@ -159,7 +160,7 @@ export default defineComponent({
       default: false,
     },
     content: {
-      type: Object as PropType<Component>,
+      type: [Object, String] as PropType<Component | string>,
     },
     contentProps: {
       type: Object as PropType<Record<string, unknown>>,
@@ -255,6 +256,16 @@ export default defineComponent({
         ...this.contentProps,
         modalRef: { ...this.modalRef },
       };
+      const component =
+        typeof this.content === "string"
+          ? resolveComponent(this.content)
+          : (this.content as Component);
+
+      if (typeof component === "string") {
+        console.error(
+          `Unknown component name: ${component}. Did you register it to your vue instance?`
+        );
+      }
       let vnode: VNode | undefined = createVNode(
         this.content as Component,
         props
@@ -323,9 +334,9 @@ export default defineComponent({
 }
 
 .bs-dialog-animated {
-  --animation-duration: .5s;
-  -webkit-animation-duration: .5s;
-  animation-duration: .5s;
+  --animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
   -webkit-animation-duration: var(--animation-duration);
   animation-duration: var(--animation-duration);
   -webkit-animation-fill-mode: both;

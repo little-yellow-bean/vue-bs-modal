@@ -53,6 +53,8 @@ app.use(Modal).mount("#app");
       this.$modal
         .show({
           title: "Edit Profile",
+          // pass your component as the modal body content
+          // you can also use the component's registered name
           content: EditProfileComponent,
           rightBtnText: "Update",
           leftBtnText: "Discard",

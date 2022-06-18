@@ -44,7 +44,7 @@ export interface ConfirmOption {
 
 export interface ModalOption {
   title: string;
-  content: Component;
+  content: Component | string;
   leftBtnText?: string;
   rightBtnText?: string;
   size?: ModalSize;

@@ -12,7 +12,7 @@ export declare interface ConfirmOption {
 
 export declare interface ModalOption {
   title: string;
-  content: Component;
+  content: Component | string;
   leftBtnText?: string;
   rightBtnText?: string;
   size?: ModalSize;
