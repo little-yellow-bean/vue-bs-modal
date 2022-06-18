@@ -64,6 +64,14 @@ app.use(Modal).mount("#app");
             username: "yellowbean"
           },
           center: true,
+          displayHeader: true, // default is true
+          displayFooter: true, // default is true
+          displayCloseBtn: true, // default is true
+          displayLeftBtn: true, // default is true
+          displayRightBtn: true, // default is true
+          autoCloseOnRightBtnClick: true, // default is false
+          autoCloseOnLeftBtnClick: true, // default is false
+          backgroundScrolling: true, // default is false
         })
         .then(({ confirmed, modalRef, data }) => {
           // confirmed will be true for right button click, false for left button or close button or backdrop click.
@@ -73,7 +81,7 @@ app.use(Modal).mount("#app");
           }
 
           // need to manually close the modal if you click the left/right button.
-          // this is not required for confirmation dialog.
+          // or you can set the autoClose configration
           modalRef.close();
         });
     },

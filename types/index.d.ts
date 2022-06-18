@@ -7,6 +7,7 @@ export declare interface ConfirmOption {
   center?: boolean;
   leftBtnText?: string;
   rightBtnText?: string;
+  backgroundScrolling?: boolean;
 }
 
 export declare interface ModalOption {
@@ -22,10 +23,13 @@ export declare interface ModalOption {
   displayCloseBtn?: boolean;
   displayLeftBtn?: boolean;
   displayRightBtn?: boolean;
+  autoCloseOnRightBtnClick?: boolean;
+  autoCloseOnLeftBtnClick?: boolean;
+  backgroundScrolling?: boolean;
 }
 
 export declare interface ModalRef {
-  close: () => void;
+  readonly close: () => void;
 }
 
 export declare interface ModalReturn {
@@ -34,8 +38,14 @@ export declare interface ModalReturn {
   data?: Record<string, unknown>;
 }
 export declare interface Modal {
-  confirm: (options?: ConfirmOption, el?: HTMLElement) => Promise<boolean>;
-  show: (options: ModalOption, el?: HTMLElement) => Promise<ModalReturn>;
+  readonly confirm: (
+    options?: ConfirmOption,
+    el?: HTMLElement
+  ) => Promise<boolean>;
+  readonly show: (
+    options: ModalOption,
+    el?: HTMLElement
+  ) => Promise<ModalReturn>;
 }
 
 export declare enum ModalSize {

@@ -9,6 +9,7 @@ export const CONFIRM_OPTION_KEYS = [
   "center",
   "leftBtnText",
   "rightBtnText",
+  "backgroundScrolling",
 ];
 
 export const MODAL_OPTION_KEYS = [
@@ -24,6 +25,9 @@ export const MODAL_OPTION_KEYS = [
   "displayCloseBtn",
   "displayLeftBtn",
   "displayRightBtn",
+  "autoCloseOnRightBtnClick",
+  "autoCloseOnLeftBtnClick",
+  "backgroundScrolling",
 ];
 
 export const INVALID_OPTIONS = "Invalid Options";
@@ -35,6 +39,7 @@ export interface ConfirmOption {
   center?: boolean;
   leftBtnText?: string;
   rightBtnText?: string;
+  backgroundScrolling?: boolean;
 }
 
 export interface ModalOption {
@@ -50,15 +55,18 @@ export interface ModalOption {
   displayCloseBtn?: boolean;
   displayLeftBtn?: boolean;
   displayRightBtn?: boolean;
+  autoCloseOnRightBtnClick?: boolean;
+  autoCloseOnLeftBtnClick?: boolean;
+  backgroundScrolling?: boolean;
 }
 
 export interface ModalRef {
-  close: () => void;
+  readonly close: () => void;
 }
 
 export interface ContentRef {
-  clear: () => void;
-  internalComponentVNode: VNode;
+  readonly clear: () => void;
+  readonly internalComponentVNode: VNode;
 }
 
 export interface ModalReturn {
@@ -68,8 +76,14 @@ export interface ModalReturn {
 }
 
 export interface Modal {
-  confirm: (options?: ConfirmOption, el?: HTMLElement) => Promise<boolean>;
-  show: (options: ModalOption, el?: HTMLElement) => Promise<ModalReturn>;
+  readonly confirm: (
+    options?: ConfirmOption,
+    el?: HTMLElement
+  ) => Promise<boolean>;
+  readonly show: (
+    options: ModalOption,
+    el?: HTMLElement
+  ) => Promise<ModalReturn>;
 }
 
 export enum ModalSize {

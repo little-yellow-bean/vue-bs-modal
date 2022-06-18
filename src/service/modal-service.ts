@@ -82,7 +82,11 @@ function _renderModal(props: Record<string, unknown>, el: HTMLElement) {
     },
   };
   _currentModalRef = modalRef;
-  vnode.props = { ...vnode.props, context: _context, modalRef };
+  vnode.props = {
+    ...vnode.props,
+    context: _context,
+    modalRef: { ...modalRef },
+  };
   render(vnode, el);
 }
 

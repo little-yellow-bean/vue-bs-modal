@@ -85,6 +85,8 @@ const FADE_IN_CLASS = "dialog-fadeIn";
 const FADE_OUT_CLASS = "dialog-fadeOut";
 const FADE_IN_DOWN_CLASS = "dialog-fadeInDown";
 const FADE_OUT_UP_CLASS = "dialog-fadeOutUp";
+const DISABLE_SCROLLING = "hidden";
+const ENABLE_SCROLLING = "";
 
 export default defineComponent({
   name: "ModalComponent",
@@ -144,6 +146,18 @@ export default defineComponent({
       type: Boolean as PropType<boolean>,
       default: true,
     },
+    autoCloseOnRightBtnClick: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+    },
+    autoCloseOnLeftBtnClick: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+    },
+    backgroundScrolling: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+    },
     content: {
       type: Object as PropType<Component>,
     },
@@ -169,6 +183,9 @@ export default defineComponent({
   },
   created() {
     this.show = true;
+    if (!this.backgroundScrolling) {
+      this.toggleBodyScrolling(false);
+    }
   },
   mounted() {
     if (this.content) {
@@ -178,17 +195,22 @@ export default defineComponent({
   beforeUnmount() {
     this.clearContent();
   },
+  unmounted() {
+    if (!this.backgroundScrolling) {
+      this.toggleBodyScrolling(true);
+    }
+  },
   methods: {
     onRightBtnClick() {
       this.onResolve(true);
-      if (!this.content) {
+      if (!this.content || this.autoCloseOnRightBtnClick) {
         this.closeModal();
       }
     },
 
     onLeftBtnClick() {
       this.onResolve(false);
-      if (!this.content) {
+      if (!this.content || this.autoCloseOnLeftBtnClick) {
         this.closeModal();
       }
     },
@@ -216,7 +238,7 @@ export default defineComponent({
       const resolvedValue = this.content
         ? {
             confirmed,
-            modalRef: this.modalRef,
+            modalRef: { ...this.modalRef },
             data: this.contentRef?.internalComponentVNode?.component?.data,
           }
         : confirmed;
@@ -231,7 +253,7 @@ export default defineComponent({
       const el = this.$refs.content as HTMLElement;
       const props = {
         ...this.contentProps,
-        modalRef: this.modalRef,
+        modalRef: { ...this.modalRef },
       };
       let vnode: VNode | undefined = createVNode(
         this.content as Component,
@@ -250,6 +272,12 @@ export default defineComponent({
 
     clearContent() {
       (this.contentRef as ContentRef)?.clear();
+    },
+
+    toggleBodyScrolling(scroll: boolean) {
+      scroll
+        ? (document.body.style.overflow = ENABLE_SCROLLING)
+        : (document.body.style.overflow = DISABLE_SCROLLING);
     },
 
     getDialogClass() {
@@ -295,9 +323,9 @@ export default defineComponent({
 }
 
 .bs-dialog-animated {
-  --animation-duration: 0.6s;
-  -webkit-animation-duration: 0.6s;
-  animation-duration: 0.6s;
+  --animation-duration: .5s;
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
   -webkit-animation-duration: var(--animation-duration);
   animation-duration: var(--animation-duration);
   -webkit-animation-fill-mode: both;
