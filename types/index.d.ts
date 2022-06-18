@@ -15,6 +15,9 @@ export declare interface ModalOption {
   content: Component | string;
   leftBtnText?: string;
   rightBtnText?: string;
+  leftBtnHandler?: string;
+  rightBtnHandler?: string;
+  resolveDataHander?: string;
   size?: ModalSize;
   contentProps?: Record<string, unknown>;
   center?: boolean;
@@ -33,10 +36,18 @@ export declare interface ModalRef {
 }
 
 export declare interface ModalReturn {
-  confirmed: boolean;
+  action: ModalAction;
   modalRef: ModalRef;
-  data?: Record<string, unknown>;
+  data?: any;
 }
+
+export declare enum ModalAction {
+  LEFT_BTN_CLICK = "LEFT_BTN_CLICK",
+  RIGHT_BTN_CLICK = "RIGHT_BTN_CLICK",
+  CLOSE_BTN_CLICK = "CLOSE_BTN_CLICK",
+  BACKDROP_CLICK = "BACKDROP_CLICK",
+}
+
 export declare interface Modal {
   readonly confirm: (
     options?: ConfirmOption,

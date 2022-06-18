@@ -72,7 +72,13 @@ import {
   AppContext,
   resolveComponent,
 } from "vue";
-import { ModalRef, ContentRef, ModalSize } from "../models/model";
+import {
+  ModalRef,
+  ContentRef,
+  ModalSize,
+  ModalReturn,
+  ModalAction,
+} from "../models/model";
 interface Data {
   show: boolean;
   out: boolean;
@@ -88,6 +94,7 @@ const FADE_IN_DOWN_CLASS = "dialog-fadeInDown";
 const FADE_OUT_UP_CLASS = "dialog-fadeOutUp";
 const DISABLE_SCROLLING = "hidden";
 const ENABLE_SCROLLING = "";
+const DEFAULT_RESOLVE_DATA_HANDLER = "onResolveData";
 
 export default defineComponent({
   name: "ModalComponent",
@@ -181,6 +188,15 @@ export default defineComponent({
       type: Object as PropType<AppContext>,
       required: true,
     },
+    leftBtnHandler: {
+      type: String as PropType<string>,
+    },
+    rightBtnHandler: {
+      type: String as PropType<string>,
+    },
+    resolveDataHander: {
+      type: String as PropType<string>,
+    },
   },
   created() {
     this.show = true;
@@ -202,15 +218,47 @@ export default defineComponent({
     }
   },
   methods: {
-    onRightBtnClick() {
-      this.onResolve(true);
+    async onRightBtnClick() {
+      if (this.content && this.rightBtnHandler != null) {
+        const proxy: any =
+          this.contentRef?.internalComponentVNode?.component?.proxy;
+        const handler = proxy?.[this.rightBtnHandler];
+        let canResolve;
+        if (handler) {
+          try {
+            canResolve = await handler.apply?.(proxy);
+          } catch (error) {
+            console.error(error);
+          }
+          if (canResolve === false) {
+            return;
+          }
+        }
+      }
+      this.onResolve(ModalAction.RIGHT_BTN_CLICK, true);
       if (!this.content || this.autoCloseOnRightBtnClick) {
         this.closeModal();
       }
     },
 
-    onLeftBtnClick() {
-      this.onResolve(false);
+    async onLeftBtnClick() {
+      if (this.content && this.leftBtnHandler != null) {
+        const proxy: any =
+          this.contentRef?.internalComponentVNode?.component?.proxy;
+        const handler = proxy?.[this.leftBtnHandler];
+        let canResolve;
+        if (handler) {
+          try {
+            canResolve = await handler.apply?.(proxy);
+          } catch (error) {
+            console.error(error);
+          }
+          if (canResolve === false) {
+            return;
+          }
+        }
+      }
+      this.onResolve(ModalAction.LEFT_BTN_CLICK, false);
       if (!this.content || this.autoCloseOnLeftBtnClick) {
         this.closeModal();
       }
@@ -226,23 +274,37 @@ export default defineComponent({
         finalTarget?.classList?.contains(MODAL_CLASS) &&
         finalTarget === this.initialTarget
       ) {
-        this.onCloseBtnClick();
+        this.onResolve(ModalAction.BACKDROP_CLICK, false);
+        this.closeModal();
       }
     },
 
     onCloseBtnClick() {
-      this.onResolve(false);
+      this.onResolve(ModalAction.CLOSE_BTN_CLICK, false);
       this.closeModal();
     },
 
-    onResolve(confirmed: boolean) {
-      const resolvedValue = this.content
-        ? {
-            confirmed,
-            modalRef: { ...this.modalRef },
-            data: this.contentRef?.internalComponentVNode?.component?.data,
+    onResolve(action: ModalAction, confirmed: boolean) {
+      let resolvedValue: boolean | ModalReturn = confirmed;
+      if (this.content) {
+        let data;
+        const proxy: any =
+          this.contentRef?.internalComponentVNode?.component?.proxy;
+        const handler =
+          proxy?.[this.resolveDataHander ?? DEFAULT_RESOLVE_DATA_HANDLER];
+        if (handler) {
+          try {
+            data = handler.apply?.(proxy);
+          } catch (error) {
+            console.error(error);
           }
-        : confirmed;
+        }
+        resolvedValue = {
+          modalRef: { ...this.modalRef },
+          action,
+          data,
+        };
+      }
       this.resolve(resolvedValue);
     },
 
@@ -266,10 +328,7 @@ export default defineComponent({
           `Unknown component name: ${component}. Did you register it to your vue instance?`
         );
       }
-      let vnode: VNode | undefined = createVNode(
-        component,
-        props
-      );
+      let vnode: VNode | undefined = createVNode(component, props);
       vnode.appContext = this.context;
       this.contentRef = {
         clear: () => {

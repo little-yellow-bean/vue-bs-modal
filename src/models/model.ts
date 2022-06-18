@@ -28,6 +28,9 @@ export const MODAL_OPTION_KEYS = [
   "autoCloseOnRightBtnClick",
   "autoCloseOnLeftBtnClick",
   "backgroundScrolling",
+  "leftBtnHandler",
+  "rightBtnHandler",
+  "resolveDataHander",
 ];
 
 export const INVALID_OPTIONS = "Invalid Options";
@@ -47,6 +50,9 @@ export interface ModalOption {
   content: Component | string;
   leftBtnText?: string;
   rightBtnText?: string;
+  leftBtnHandler?: string;
+  rightBtnHandler?: string;
+  resolveDataHander?: string;
   size?: ModalSize;
   contentProps?: Record<string, unknown>;
   center?: boolean;
@@ -70,9 +76,16 @@ export interface ContentRef {
 }
 
 export interface ModalReturn {
-  confirmed: boolean;
+  action: ModalAction;
   modalRef: ModalRef;
-  data?: Record<string, unknown>;
+  data?: any;
+}
+
+export enum ModalAction {
+  LEFT_BTN_CLICK = "LEFT_BTN_CLICK",
+  RIGHT_BTN_CLICK = "RIGHT_BTN_CLICK",
+  CLOSE_BTN_CLICK = "CLOSE_BTN_CLICK",
+  BACKDROP_CLICK = "BACKDROP_CLICK",
 }
 
 export interface Modal {

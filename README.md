@@ -58,6 +58,14 @@ app.use(Modal).mount("#app");
           content: EditProfileComponent,
           rightBtnText: "Update",
           leftBtnText: "Discard",
+          // a method name of your content component, which will be called when left button is clicked
+          // can return false if you don't want the promise resolve
+          leftBtnHandler: "doNothing",
+          // a method name of your content component, which will be called when right button is clicked
+          // can return false if you don't want the promise resolve
+          rightBtnHandler: "doUpdateProfile",
+          // a method name of your content component, which will be called when any ModalAction occurs, and the returned value of this method will be the data property of the ModalReturn. Default is "onResolveData"
+          resolveDataHander: "onResolveData",
           size: ModalSize.LARGE,
           // pass custom data as props to the EditProfileComponent.
           // the "modalRef" prop is passed to the content componet by default in case you want to close the modal inside your component.
@@ -75,15 +83,12 @@ app.use(Modal).mount("#app");
           autoCloseOnLeftBtnClick: true, // default is false
           backgroundScrolling: true, // default is false
         })
-        .then(({ confirmed, modalRef, data }) => {
-          // confirmed will be true for right button click, false for left button or close button or backdrop click.
-          // data will be the data field of the EditProfileComponent.
-          if (confirmed) {
-            // do something
-          }
+        .then(({ action, modalRef, data }) => {
+          // action is a type of ModalAction: LEFT_BTN_CLICK, RIGHT_BTN_CLICK, CLOSE_BTN_CLICK, BACKDROP_CLICK
+          // data will be the returned value of resolveDataHander method
 
-          // need to manually close the modal if you click the left/right button.
-          // or you can set the autoClose configuration
+
+          // you can choose to close the modal here, or inside your content component, or just set the autoClose configuration.
           modalRef.close();
         });
     },
