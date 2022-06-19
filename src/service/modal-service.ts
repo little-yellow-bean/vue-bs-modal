@@ -11,17 +11,16 @@ import ModalComponent from "../components/modal.vue";
 import {
   ConfirmOption,
   CONFIRM_OPTION_KEYS,
-  INVALID_OPTIONS,
   Modal,
   ModalOption,
   ModalRef,
-  ModalReturn,
-  MODAL_DELAY,
   MODAL_OPTION_KEYS,
 } from "../models/model";
 
 let _context: AppContext;
-let _currentModalRef: ModalRef | undefined;
+const currentModalRefs: ModalRef[] = [];
+export const MODAL_DELAY = 500;
+export const INVALID_OPTIONS = "Invalid Options";
 
 function confirm(
   options?: ConfirmOption,
@@ -40,37 +39,26 @@ function confirm(
   });
 }
 
-function show(
-  options: ModalOption,
-  el: HTMLElement = document.body
-): Promise<ModalReturn> {
+function open(options: ModalOption, el: HTMLElement = document.body): void {
   if (!isCommonModalOption(options)) {
     throw new Error(INVALID_OPTIONS);
   }
-  return new Promise((resolve, reject) => {
-    const props = {
-      ...options,
-      resolve,
-      reject,
-    };
-    renderModal(props, el);
-  });
+  renderModal({ ...options, full: true }, el);
+}
+
+function close() {
+  const modalRef = currentModalRefs.pop();
+  modalRef?.close();
 }
 
 function renderModal(props: Record<string, unknown>, el: HTMLElement) {
-  if (_currentModalRef) {
-    _currentModalRef.close();
-    setTimeout(() => _renderModal(props, el), MODAL_DELAY);
-  } else {
-    _renderModal(props, el);
-  }
-}
-
-function _renderModal(props: Record<string, unknown>, el: HTMLElement) {
+  const host = document.createElement("span");
+  el.appendChild(host);
   let vnode: VNode | undefined = createVNode(ModalComponent, props);
   vnode.appContext = _context;
   const modalRef: ModalRef = {
     closed: false,
+    host,
     close() {
       if (this.closed) {
         return;
@@ -80,19 +68,14 @@ function _renderModal(props: Record<string, unknown>, el: HTMLElement) {
       this.closed = true;
       component.data.out = true;
       setTimeout(() => {
-        _currentModalRef = undefined;
         render(null, el);
         vnode = undefined;
+        this.host.remove();
       }, MODAL_DELAY);
     },
   };
-  _currentModalRef = modalRef;
-  vnode.props = {
-    ...vnode.props,
-    context: _context,
-    modalRef,
-  };
-  render(vnode, el);
+  currentModalRefs.push(modalRef);
+  render(vnode, host);
 }
 
 function isConfirmOption(
@@ -102,7 +85,7 @@ function isConfirmOption(
 }
 
 function isCommonModalOption(options: ModalOption): options is ModalOption {
-  if (!options?.content || !options?.title) {
+  if (!options?.content) {
     return false;
   }
   return isSubArray(MODAL_OPTION_KEYS, Object.keys(options));
@@ -118,12 +101,13 @@ export function setCurrentAppContext(context: AppContext) {
 
 export const modal: Modal = {
   confirm,
-  show,
+  open,
+  close,
 };
 
 export default {
   install(app: App) {
     _context = app._context;
-    app.config.globalProperties.$modal = modal;
+    app.config.globalProperties.$vbsModal = modal;
   },
 };

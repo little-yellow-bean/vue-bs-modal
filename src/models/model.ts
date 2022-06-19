@@ -1,6 +1,5 @@
-import { Component, VNode } from "vue";
+import { Component } from "vue";
 
-export const MODAL_DELAY = 500;
 
 export const CONFIRM_OPTION_KEYS = [
   "title",
@@ -10,30 +9,17 @@ export const CONFIRM_OPTION_KEYS = [
   "leftBtnText",
   "rightBtnText",
   "backgroundScrolling",
+  "staticBackdrop",
 ];
 
 export const MODAL_OPTION_KEYS = [
-  "title",
   "content",
-  "leftBtnText",
-  "rightBtnText",
-  "size",
   "contentProps",
+  "size",
   "center",
-  "displayHeader",
-  "displayFooter",
-  "displayCloseBtn",
-  "displayLeftBtn",
-  "displayRightBtn",
-  "autoCloseOnRightBtnClick",
-  "autoCloseOnLeftBtnClick",
   "backgroundScrolling",
-  "leftBtnHandler",
-  "rightBtnHandler",
-  "resolveDataHander",
+  "staticBackdrop",
 ];
-
-export const INVALID_OPTIONS = "Invalid Options";
 
 export interface ConfirmOption {
   title?: string;
@@ -43,50 +29,22 @@ export interface ConfirmOption {
   leftBtnText?: string;
   rightBtnText?: string;
   backgroundScrolling?: boolean;
+  staticBackdrop?: boolean;
 }
 
 export interface ModalOption {
-  title: string;
   content: Component | string;
-  leftBtnText?: string;
-  rightBtnText?: string;
-  leftBtnHandler?: string;
-  rightBtnHandler?: string;
-  resolveDataHander?: string;
-  size?: ModalSize;
   contentProps?: Record<string, unknown>;
+  size?: ModalSize;
   center?: boolean;
-  displayHeader?: boolean;
-  displayFooter?: boolean;
-  displayCloseBtn?: boolean;
-  displayLeftBtn?: boolean;
-  displayRightBtn?: boolean;
-  autoCloseOnRightBtnClick?: boolean;
-  autoCloseOnLeftBtnClick?: boolean;
   backgroundScrolling?: boolean;
+  staticBackdrop?: boolean;
 }
 
 export interface ModalRef {
+  host: HTMLElement;
   closed: boolean;
   readonly close: () => void;
-}
-
-export interface ContentRef {
-  readonly clear: () => void;
-  readonly internalComponentVNode: VNode;
-}
-
-export interface ModalReturn {
-  action: ModalAction;
-  modalRef: ModalRef;
-  data?: any;
-}
-
-export enum ModalAction {
-  LEFT_BTN_CLICK = "LEFT_BTN_CLICK",
-  RIGHT_BTN_CLICK = "RIGHT_BTN_CLICK",
-  CLOSE_BTN_CLICK = "CLOSE_BTN_CLICK",
-  BACKDROP_CLICK = "BACKDROP_CLICK",
 }
 
 export interface Modal {
@@ -94,10 +52,8 @@ export interface Modal {
     options?: ConfirmOption,
     el?: HTMLElement
   ) => Promise<boolean>;
-  readonly show: (
-    options: ModalOption,
-    el?: HTMLElement
-  ) => Promise<ModalReturn>;
+  readonly open: (options: ModalOption, el?: HTMLElement) => void;
+  readonly close: () => void;
 }
 
 export enum ModalSize {

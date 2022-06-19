@@ -37,7 +37,8 @@ app.use(Modal).mount("#app");
 
 ```javascript
  async beforeRouteLeave() {
-    const confirmed = await this.$modal.confirm({
+    // once this library is installed. it will add a $vbsModal global property to the app instance.
+    const confirmed = await this.$vbsModal.confirm({
       title: "Unsaved Changes",
       message: "Are you sure you want to leave this page?",
     });
@@ -49,49 +50,31 @@ app.use(Modal).mount("#app");
 #### common modal:
 
 ```javascript
- editProfile() {
-      this.$modal
-        .show({
-          title: "Edit Profile",
-          // pass your component as the modal body content
+ openProfileModal() {
+      this.$vbsModal
+        .open({
+          // pass your component as the whole modal content
           // you can also use the component's registered name
           content: EditProfileComponent,
-          rightBtnText: "Update",
-          leftBtnText: "Discard",
-          // a method name of your content component, which will be called when left button is clicked
-          // can return false if you don't want the promise resolve
-          leftBtnHandler: "doNothing",
-          // a method name of your content component, which will be called when right button is clicked
-          // can return false if you don't want the promise resolve
-          rightBtnHandler: "doUpdateProfile",
-          // a method name of your content component, which will be called when any ModalAction occurs, and the returned value of this method will be the data property of the ModalReturn. Default is "onResolveData"
-          resolveDataHander: "onResolveData",
           size: ModalSize.LARGE,
           // pass custom data as props to the EditProfileComponent.
-          // the "modalRef" prop is passed to the content componet by default in case you want to close the modal inside your component.
           contentProps: {
             email: "example@example.com",
-            username: "yellowbean"
+            username: "yellowbean",
+            onSubmit: this.onSubmitProfileForm
           },
-          center: true,
-          displayHeader: true, // default is true
-          displayFooter: true, // default is true
-          displayCloseBtn: true, // default is true
-          displayLeftBtn: true, // default is true
-          displayRightBtn: true, // default is true
-          autoCloseOnRightBtnClick: true, // default is false
-          autoCloseOnLeftBtnClick: true, // default is false
+          center: true, // default is false
           backgroundScrolling: true, // default is false
-        })
-        .then(({ action, modalRef, data }) => {
-          // action is a type of ModalAction: LEFT_BTN_CLICK, RIGHT_BTN_CLICK, CLOSE_BTN_CLICK, BACKDROP_CLICK
-          // data will be the returned value of resolveDataHander method
-
-
-          // you can choose to close the modal here, or inside your content component, or just set the autoClose configuration.
-          modalRef.close();
+          staticBackdrop: true, // will disable backdrop click to close modal if true
         });
     },
+
+    onSubmitProfileForm(data: any) {
+      // do profile update logic
+        ...
+
+      this.$vbsModal.close();
+    }
 
 ```
 

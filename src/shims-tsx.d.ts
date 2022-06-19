@@ -15,6 +15,6 @@ declare global {
 
 declare module "@vue/runtime-core" {
     interface ComponentCustomProperties {
-      $modal: Modal;
+      $vbsModal: Modal;
     }
   }

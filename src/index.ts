@@ -5,11 +5,11 @@ if (typeof window !== "undefined" && window.Vue) {
   window.Vue.use(plugin);
 }
 
-export { ModalSize, ModalAction } from "./models/model";
+export { ModalSize } from "./models/model";
 
 export default {
   install(app: App) {
     setCurrentAppContext(app._context);
-    app.config.globalProperties.$modal = modal;
+    app.config.globalProperties.$vbsModal = modal;
   },
 };

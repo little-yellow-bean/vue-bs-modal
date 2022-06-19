@@ -8,45 +8,16 @@ export declare interface ConfirmOption {
   leftBtnText?: string;
   rightBtnText?: string;
   backgroundScrolling?: boolean;
+  staticBackdrop?: boolean;
 }
 
 export declare interface ModalOption {
-  title: string;
   content: Component | string;
-  leftBtnText?: string;
-  rightBtnText?: string;
-  leftBtnHandler?: string;
-  rightBtnHandler?: string;
-  resolveDataHander?: string;
-  size?: ModalSize;
   contentProps?: Record<string, unknown>;
+  size?: ModalSize;
   center?: boolean;
-  displayHeader?: boolean;
-  displayFooter?: boolean;
-  displayCloseBtn?: boolean;
-  displayLeftBtn?: boolean;
-  displayRightBtn?: boolean;
-  autoCloseOnRightBtnClick?: boolean;
-  autoCloseOnLeftBtnClick?: boolean;
   backgroundScrolling?: boolean;
-}
-
-export declare interface ModalRef {
-  closed: boolean;
-  readonly close: () => void;
-}
-
-export declare interface ModalReturn {
-  action: ModalAction;
-  modalRef: ModalRef;
-  data?: any;
-}
-
-export declare enum ModalAction {
-  LEFT_BTN_CLICK = "LEFT_BTN_CLICK",
-  RIGHT_BTN_CLICK = "RIGHT_BTN_CLICK",
-  CLOSE_BTN_CLICK = "CLOSE_BTN_CLICK",
-  BACKDROP_CLICK = "BACKDROP_CLICK",
+  staticBackdrop?: boolean;
 }
 
 export declare interface Modal {
@@ -54,10 +25,8 @@ export declare interface Modal {
     options?: ConfirmOption,
     el?: HTMLElement
   ) => Promise<boolean>;
-  readonly show: (
-    options: ModalOption,
-    el?: HTMLElement
-  ) => Promise<ModalReturn>;
+  readonly open: (options: ModalOption, el?: HTMLElement) => void;
+  readonly close: () => void;
 }
 
 export declare enum ModalSize {
@@ -74,13 +43,13 @@ export declare enum ModalSize {
 
 declare module "vue/types/vue" {
   interface Vue {
-    $modal: Modal;
+    $vbsModal: Modal;
   }
 }
 
 declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
-    $modal: Modal;
+    $vbsModal: Modal;
   }
 }
 
