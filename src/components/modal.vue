@@ -83,6 +83,7 @@ interface Data {
   show: boolean;
   out: boolean;
   initialTarget: HTMLElement | undefined;
+  disableScrolling: boolean;
 }
 
 const MODAL_CENTTER_CLASS = "modal-dialog-centered";
@@ -97,6 +98,7 @@ export default defineComponent({
       show: false,
       out: false,
       initialTarget: undefined,
+      disableScrolling: false,
     };
   },
   props: {
@@ -155,11 +157,15 @@ export default defineComponent({
   created() {
     this.show = true;
     if (!this.backgroundScrolling) {
-      this.toggleBodyScrolling(false);
+      const overflow = document.body.style.overflow;
+      if (overflow !== DISABLE_SCROLLING) {
+        this.disableScrolling = true;
+        this.toggleBodyScrolling(false);
+      }
     }
   },
-  unmounted() {
-    if (!this.backgroundScrolling) {
+  beforeUnmount() {
+    if (!this.backgroundScrolling && this.disableScrolling) {
       this.toggleBodyScrolling(true);
     }
   },
