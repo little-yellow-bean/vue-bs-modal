@@ -198,7 +198,7 @@ export default defineComponent({
     },
 
     closeModal() {
-      this.$modal?.close();
+      this.$vbsModal?.close();
     },
 
     toggleBodyScrolling(scroll: boolean) {
