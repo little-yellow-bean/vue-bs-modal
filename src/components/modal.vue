@@ -164,7 +164,7 @@ export default defineComponent({
       }
     }
   },
-  beforeUnmount() {
+  unmounted() {
     if (!this.backgroundScrolling && this.disableScrolling) {
       this.toggleBodyScrolling(true);
     }

@@ -68,7 +68,7 @@ function renderModal(props: Record<string, unknown>, el: HTMLElement) {
       this.closed = true;
       component.data.out = true;
       setTimeout(() => {
-        render(null, el);
+        render(null, host);
         vnode = undefined;
         this.host.remove();
       }, MODAL_DELAY);
