@@ -1,13 +1,14 @@
 {
   "name": "vue-bs-modal",
   "description": "A Bootstrap style Vue.js modal",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "private": false,
   "author": {
     "name": "YellowBean",
     "email": "brazel@foxmail.com"
   },
   "repository": "https://github.com/little-yellow-bean/vue-bs-modal",
+  "homepage": "http://vue-bs-modal.yellowbean.top",
   "keywords": [
     "Modal",
     "Dialog",
@@ -39,13 +40,10 @@
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "typescript": "~4.5.5",
-    "vue": "^3.2.13"
-  },
-  "peerDependencies": {
+    "vue": "^3.2.13",
     "bootstrap": "^5.1.3",
-    "vue": "^3.2.13"
+    "bootstrap-icons": "^1.8.3"
   },
-  "dependencies": {},
   "main": "dist/vue-bs-modal.common.js",
   "browser": "dist/vue-bs-modal.umd.min.js",
   "files": [
