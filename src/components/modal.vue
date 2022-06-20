@@ -157,11 +157,8 @@ export default defineComponent({
   created() {
     this.show = true;
     if (!this.backgroundScrolling) {
-      const overflow = document.body.style.overflow;
-      if (overflow !== DISABLE_SCROLLING) {
-        this.disableScrolling = true;
-        this.toggleBodyScrolling(false);
-      }
+      this.disableScrolling = true;
+      this.toggleBodyScrolling(false);
     }
   },
   unmounted() {

@@ -42,6 +42,7 @@ export interface ModalOption {
 }
 
 export interface ModalRef {
+  config: ModalOption | ConfirmOption;
   host: HTMLElement;
   closed: boolean;
   readonly close: () => void;

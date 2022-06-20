@@ -35,7 +35,7 @@ function confirm(
       resolve,
       reject,
     };
-    renderModal(props, el);
+    renderModal(props, el, options);
   });
 }
 
@@ -43,7 +43,7 @@ function open(options: ModalOption, el: HTMLElement = document.body): void {
   if (!isCommonModalOption(options)) {
     throw new Error(INVALID_OPTIONS);
   }
-  renderModal({ ...options, full: true }, el);
+  renderModal({ ...options, full: true }, el, options);
 }
 
 function close() {
@@ -51,7 +51,11 @@ function close() {
   modalRef?.close();
 }
 
-function renderModal(props: Record<string, unknown>, el: HTMLElement) {
+function renderModal(
+  props: Record<string, unknown>,
+  el: HTMLElement,
+  config: ModalOption | ConfirmOption
+) {
   const host = document.createElement("span");
   el.appendChild(host);
   let vnode: VNode | undefined = createVNode(ModalComponent, props);
@@ -59,15 +63,22 @@ function renderModal(props: Record<string, unknown>, el: HTMLElement) {
   const modalRef: ModalRef = {
     closed: false,
     host,
+    config,
     close() {
       if (this.closed) {
         return;
       }
+      this.closed = true;
       const component = (vnode as VNode)
         ?.component as ComponentInternalInstance;
-      this.closed = true;
       component.data.out = true;
       setTimeout(() => {
+        const found = currentModalRefs.find(
+          (m) => !m.config?.backgroundScrolling
+        );
+        if (found) {
+          component.data.disableScrolling = false;
+        }
         render(null, host);
         vnode = undefined;
         this.host.remove();
