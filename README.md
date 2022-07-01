@@ -22,7 +22,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import Modal from "vue-bs-modal";
 
-// you have to import bootstrap css.
+// you have to include bootstrap css in your project. (Bootstrap 5 is recommended)
 import "bootstrap/dist/css/bootstrap.min.css";
 // import bootstrap icons (this is not required, you can use your own icon class)
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -69,7 +69,7 @@ app.use(Modal).mount("#app");
         });
     },
 
-    onSubmitProfileForm(data: any) {
+ onSubmitProfileForm(data: any) {
       // do profile update logic
         ...
 

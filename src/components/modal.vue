@@ -242,6 +242,7 @@ export default defineComponent({
 <style lang="css" scoped>
 .bs-dialog {
   display: block;
+  overflow-y: auto;
 }
 
 .confirm-message i {
