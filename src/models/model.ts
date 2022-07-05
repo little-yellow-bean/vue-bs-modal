@@ -1,4 +1,4 @@
-import { Component } from "vue";
+import { App, Component } from "vue";
 
 
 export const CONFIRM_OPTION_KEYS = [
@@ -55,6 +55,10 @@ export interface Modal {
   ) => Promise<boolean>;
   readonly open: (options: ModalOption, el?: HTMLElement) => void;
   readonly close: () => void;
+}
+
+export interface ModalPlugin {
+  install: (app: App) => void;
 }
 
 export enum ModalSize {

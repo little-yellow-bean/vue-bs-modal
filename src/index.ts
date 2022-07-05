@@ -2,7 +2,7 @@ import { App } from "vue";
 import plugin, { modal, setCurrentAppContext } from "./service/modal-service";
 
 if (typeof window !== "undefined" && window.Vue) {
-  window.Vue.use(plugin);
+  window.VbsModal = plugin;
 }
 
 export { ModalSize } from "./models/model";
