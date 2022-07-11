@@ -24,6 +24,8 @@ import Modal from "vue-bs-modal";
 
 // you have to include bootstrap css in your project. (Bootstrap 5 is recommended)
 import "bootstrap/dist/css/bootstrap.min.css";
+// or you can use material bootstrap MDB.
+import "mdb-ui-kit/css/mdb.min.css";
 // import bootstrap icons (this is not required, you can use your own icon class)
 import "bootstrap-icons/font/bootstrap-icons.css";
 
