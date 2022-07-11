@@ -77,16 +77,18 @@
 </template>
 <script lang="ts">
 import { Component, defineComponent, PropType } from "vue";
-import { ModalSize } from "../models/model";
+import { ModalSize, MODAL_DELAY } from "../models/model";
 
 interface Data {
   show: boolean;
   out: boolean;
+  shake: boolean;
   initialTarget: HTMLElement | undefined;
   disableScrolling: boolean;
 }
 
 const MODAL_CENTTER_CLASS = "modal-dialog-centered";
+const MODAL_SHAKE_CLASS = "bs-dialog-animated dialog-shake";
 const MODAL_CLASS = "bs-dialog";
 const DISABLE_SCROLLING = "hidden";
 const ENABLE_SCROLLING = "";
@@ -97,6 +99,7 @@ export default defineComponent({
     return {
       show: false,
       out: false,
+      shake: false,
       initialTarget: undefined,
       disableScrolling: false,
     };
@@ -182,14 +185,16 @@ export default defineComponent({
     },
 
     onBackdropClick(event: MouseEvent) {
-      if (this.staticBackdrop) {
+      const finalTarget = event.target as HTMLElement;
+      if (!finalTarget?.classList?.contains(MODAL_CLASS)) {
         return;
       }
-      const finalTarget = event.target as HTMLElement;
-      if (
-        finalTarget?.classList?.contains(MODAL_CLASS) &&
-        finalTarget === this.initialTarget
-      ) {
+      if (this.staticBackdrop) {
+        this.shake = true;
+        setTimeout(() => (this.shake = false), MODAL_DELAY);
+        return;
+      }
+      if (finalTarget === this.initialTarget) {
         this.resolve?.(false);
         this.closeModal();
       }
@@ -219,6 +224,7 @@ export default defineComponent({
       }
       clazz = {
         ...clazz,
+        [MODAL_SHAKE_CLASS]: this.shake,
         [MODAL_CENTTER_CLASS]: this.center,
       };
       return clazz;
@@ -362,5 +368,74 @@ export default defineComponent({
 .dialog-fadeOutUp {
   -webkit-animation-name: bsFadeOutUp;
   animation-name: bsFadeOutUp;
+}
+
+@-webkit-keyframes bsShake {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+
+  6.5% {
+    -webkit-transform: translateX(-6px) rotateY(-9deg);
+    transform: translateX(-6px) rotateY(-9deg);
+  }
+
+  18.5% {
+    -webkit-transform: translateX(5px) rotateY(7deg);
+    transform: translateX(5px) rotateY(7deg);
+  }
+
+  31.5% {
+    -webkit-transform: translateX(-3px) rotateY(-5deg);
+    transform: translateX(-3px) rotateY(-5deg);
+  }
+
+  43.5% {
+    -webkit-transform: translateX(2px) rotateY(3deg);
+    transform: translateX(2px) rotateY(3deg);
+  }
+
+  50% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes bsShake {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+
+  6.5% {
+    -webkit-transform: translateX(-6px) rotateY(-9deg);
+    transform: translateX(-6px) rotateY(-9deg);
+  }
+
+  18.5% {
+    -webkit-transform: translateX(5px) rotateY(7deg);
+    transform: translateX(5px) rotateY(7deg);
+  }
+
+  31.5% {
+    -webkit-transform: translateX(-3px) rotateY(-5deg);
+    transform: translateX(-3px) rotateY(-5deg);
+  }
+
+  43.5% {
+    -webkit-transform: translateX(2px) rotateY(3deg);
+    transform: translateX(2px) rotateY(3deg);
+  }
+
+  50% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+.dialog-shake {
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-name: bsShake;
+  animation-name: bsShake;
 }
 </style>

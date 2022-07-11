@@ -1,6 +1,9 @@
 import { App, Component } from "vue";
 
 
+export const MODAL_DELAY = 500;
+export const INVALID_OPTIONS = "Invalid Options";
+
 export const CONFIRM_OPTION_KEYS = [
   "title",
   "message",

@@ -11,16 +11,16 @@ import ModalComponent from "../components/modal.vue";
 import {
   ConfirmOption,
   CONFIRM_OPTION_KEYS,
+  INVALID_OPTIONS,
   Modal,
   ModalOption,
   ModalRef,
+  MODAL_DELAY,
   MODAL_OPTION_KEYS,
 } from "../models/model";
 
 let _context: AppContext;
 const currentModalRefs: ModalRef[] = [];
-export const MODAL_DELAY = 500;
-export const INVALID_OPTIONS = "Invalid Options";
 
 function confirm(
   options?: ConfirmOption,
