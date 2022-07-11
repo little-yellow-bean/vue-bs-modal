@@ -189,12 +189,12 @@ export default defineComponent({
       if (!finalTarget?.classList?.contains(MODAL_CLASS)) {
         return;
       }
-      if (this.staticBackdrop) {
-        this.shake = true;
-        setTimeout(() => (this.shake = false), MODAL_DELAY);
-        return;
-      }
       if (finalTarget === this.initialTarget) {
+        if (this.staticBackdrop) {
+          this.shake = true;
+          setTimeout(() => (this.shake = false), MODAL_DELAY);
+          return;
+        }
         this.resolve?.(false);
         this.closeModal();
       }
