@@ -82,13 +82,13 @@ import { ModalSize, MODAL_DELAY } from "../models/model";
 interface Data {
   show: boolean;
   out: boolean;
-  shake: boolean;
+  pulse: boolean;
   initialTarget: HTMLElement | undefined;
   disableScrolling: boolean;
 }
 
-const MODAL_CENTTER_CLASS = "modal-dialog-centered";
-const MODAL_SHAKE_CLASS = "bs-dialog-animated dialog-shake";
+const MODAL_CENTER_CLASS = "modal-dialog-centered";
+const MODAL_PULSE_CLASS = "bs-dialog-animated dialog-pulse";
 const MODAL_CLASS = "bs-dialog";
 const DISABLE_SCROLLING = "hidden";
 const ENABLE_SCROLLING = "";
@@ -99,7 +99,7 @@ export default defineComponent({
     return {
       show: false,
       out: false,
-      shake: false,
+      pulse: false,
       initialTarget: undefined,
       disableScrolling: false,
     };
@@ -191,8 +191,8 @@ export default defineComponent({
       }
       if (finalTarget === this.initialTarget) {
         if (this.staticBackdrop) {
-          this.shake = true;
-          setTimeout(() => (this.shake = false), MODAL_DELAY);
+          this.pulse = true;
+          setTimeout(() => (this.pulse = false), MODAL_DELAY);
           return;
         }
         this.resolve?.(false);
@@ -224,8 +224,8 @@ export default defineComponent({
       }
       clazz = {
         ...clazz,
-        [MODAL_SHAKE_CLASS]: this.shake,
-        [MODAL_CENTTER_CLASS]: this.center,
+        [MODAL_PULSE_CLASS]: this.pulse,
+        [MODAL_CENTER_CLASS]: this.center,
       };
       return clazz;
     },
@@ -370,72 +370,42 @@ export default defineComponent({
   animation-name: bsFadeOutUp;
 }
 
-@-webkit-keyframes bsShake {
-  0% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-
-  6.5% {
-    -webkit-transform: translateX(-6px) rotateY(-9deg);
-    transform: translateX(-6px) rotateY(-9deg);
-  }
-
-  18.5% {
-    -webkit-transform: translateX(5px) rotateY(7deg);
-    transform: translateX(5px) rotateY(7deg);
-  }
-
-  31.5% {
-    -webkit-transform: translateX(-3px) rotateY(-5deg);
-    transform: translateX(-3px) rotateY(-5deg);
-  }
-
-  43.5% {
-    -webkit-transform: translateX(2px) rotateY(3deg);
-    transform: translateX(2px) rotateY(3deg);
+@-webkit-keyframes bsPulse {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
   }
 
   50% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
+    -webkit-transform: scale3d(1.02, 1.02, 1.02);
+    transform: scale3d(1.02, 1.02, 1.02);
+  }
+
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
   }
 }
-@keyframes bsShake {
-  0% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-
-  6.5% {
-    -webkit-transform: translateX(-6px) rotateY(-9deg);
-    transform: translateX(-6px) rotateY(-9deg);
-  }
-
-  18.5% {
-    -webkit-transform: translateX(5px) rotateY(7deg);
-    transform: translateX(5px) rotateY(7deg);
-  }
-
-  31.5% {
-    -webkit-transform: translateX(-3px) rotateY(-5deg);
-    transform: translateX(-3px) rotateY(-5deg);
-  }
-
-  43.5% {
-    -webkit-transform: translateX(2px) rotateY(3deg);
-    transform: translateX(2px) rotateY(3deg);
+@keyframes bsPulse {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
   }
 
   50% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
+    -webkit-transform: scale3d(1.02, 1.02, 1.02);
+    transform: scale3d(1.02, 1.02, 1.02);
+  }
+
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
   }
 }
-.dialog-shake {
+.dialog-pulse {
+  -webkit-animation-name: bsPulse;
+  animation-name: bsPulse;
   -webkit-animation-timing-function: ease-in-out;
   animation-timing-function: ease-in-out;
-  -webkit-animation-name: bsShake;
-  animation-name: bsShake;
 }
 </style>

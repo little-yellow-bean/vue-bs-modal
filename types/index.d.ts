@@ -1,6 +1,6 @@
 import { Component, App } from "vue";
 
-export declare interface ConfirmOption {
+declare interface ConfirmOption {
   title?: string;
   message?: string;
   icon?: string;
@@ -11,7 +11,7 @@ export declare interface ConfirmOption {
   staticBackdrop?: boolean;
 }
 
-export declare interface ModalOption {
+declare interface ModalOption {
   content: Component | string;
   contentProps?: Record<string, unknown>;
   size?: ModalSize;
@@ -20,7 +20,7 @@ export declare interface ModalOption {
   staticBackdrop?: boolean;
 }
 
-export declare interface Modal {
+declare interface Modal {
   readonly confirm: (
     options?: ConfirmOption,
     el?: HTMLElement
