@@ -89,7 +89,8 @@ interface Data {
 
 const MODAL_CENTER_CLASS = "modal-dialog-centered";
 const MODAL_PULSE_CLASS = "bs-dialog-animated dialog-pulse";
-const MODAL_CLASS = "bs-dialog";
+const MODAL_BACKDROP_SHOW_CLASS = "bs-backdrop-show";
+const MODAL_SHOW_CLASS = "bs-dialog-show";
 const DISABLE_SCROLLING = "hidden";
 const ENABLE_SCROLLING = "";
 
@@ -186,7 +187,7 @@ export default defineComponent({
 
     onBackdropClick(event: MouseEvent) {
       const finalTarget = event.target as HTMLElement;
-      if (!finalTarget?.classList?.contains(MODAL_CLASS)) {
+      if (!finalTarget?.classList?.contains(MODAL_SHOW_CLASS)) {
         return;
       }
       if (finalTarget === this.initialTarget) {
@@ -232,23 +233,26 @@ export default defineComponent({
 
     getDialogContainerClass() {
       return {
-        show: this.show,
-        [MODAL_CLASS]: this.show,
+        [MODAL_SHOW_CLASS]: this.show,
       };
     },
 
     getDialogBackdropClass() {
       return {
-        show: this.show,
+        [MODAL_BACKDROP_SHOW_CLASS]: this.show,
       };
     },
   },
 });
 </script>
 <style lang="css" scoped>
-.bs-dialog {
+.bs-dialog-show {
   display: block;
   overflow-y: auto;
+}
+
+.bs-backdrop-show {
+  opacity: 0.5;
 }
 
 .confirm-message i {
