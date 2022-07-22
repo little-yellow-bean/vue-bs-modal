@@ -1,6 +1,5 @@
 import { App, Component } from "vue";
 
-
 export const MODAL_DELAY = 500;
 export const INVALID_OPTIONS = "Invalid Options";
 
@@ -13,6 +12,7 @@ export const CONFIRM_OPTION_KEYS = [
   "rightBtnText",
   "backgroundScrolling",
   "staticBackdrop",
+  "displayCloseBtn",
 ];
 
 export const MODAL_OPTION_KEYS = [
@@ -33,6 +33,7 @@ export interface ConfirmOption {
   rightBtnText?: string;
   backgroundScrolling?: boolean;
   staticBackdrop?: boolean;
+  displayCloseBtn?: boolean;
 }
 
 export interface ModalOption {

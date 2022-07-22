@@ -27,6 +27,7 @@
                   class="btn-close"
                   aria-label="Close"
                   @click="onCloseBtnClick"
+                  v-if="displayCloseBtn"
                 ></button>
               </div>
               <div class="modal-body">
@@ -89,7 +90,6 @@ interface Data {
 
 const MODAL_CENTER_CLASS = "modal-dialog-centered";
 const MODAL_PULSE_CLASS = "bs-dialog-animated dialog-pulse";
-const MODAL_BACKDROP_SHOW_CLASS = "bs-backdrop-show";
 const MODAL_SHOW_CLASS = "bs-dialog-show";
 const DISABLE_SCROLLING = "hidden";
 const ENABLE_SCROLLING = "";
@@ -140,6 +140,10 @@ export default defineComponent({
     staticBackdrop: {
       type: Boolean as PropType<boolean>,
       default: false,
+    },
+    displayCloseBtn: {
+      type: Boolean as PropType<boolean>,
+      default: true,
     },
     content: {
       type: [Object, String] as PropType<Component | string>,
@@ -239,19 +243,19 @@ export default defineComponent({
 
     getDialogBackdropClass() {
       return {
-        [MODAL_BACKDROP_SHOW_CLASS]: this.show,
+        [MODAL_SHOW_CLASS]: this.show,
       };
     },
   },
 });
 </script>
 <style lang="css" scoped>
-.bs-dialog-show {
+.modal.bs-dialog-show {
   display: block;
   overflow-y: auto;
 }
 
-.bs-backdrop-show {
+.modal-backdrop.bs-dialog-show {
   opacity: 0.5;
 }
 

@@ -9,6 +9,7 @@ declare interface ConfirmOption {
   rightBtnText?: string;
   backgroundScrolling?: boolean;
   staticBackdrop?: boolean;
+  displayCloseBtn?: boolean;
 }
 
 declare interface ModalOption {
