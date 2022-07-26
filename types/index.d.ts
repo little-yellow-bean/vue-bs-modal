@@ -15,6 +15,7 @@ declare interface ConfirmOption {
 declare interface ModalOption {
   content: Component | string;
   contentProps?: Record<string, unknown>;
+  contentEmits?: Record<string, unknown>;
   size?: ModalSize;
   center?: boolean;
   backgroundScrolling?: boolean;

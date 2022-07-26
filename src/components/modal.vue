@@ -55,7 +55,11 @@
               </div>
             </div>
             <div class="modal-content" v-if="full">
-              <component :is="content" v-bind="contentProps"></component>
+              <component
+                :is="content"
+                v-bind="contentProps"
+                v-on="contentEmits"
+              ></component>
             </div>
           </div>
         </div>
@@ -150,6 +154,11 @@ export default defineComponent({
     },
     contentProps: {
       type: Object as PropType<Record<string, unknown>>,
+      default: () => ({}),
+    },
+    contentEmits: {
+      type: Object as PropType<Record<string, unknown>>,
+      default: () => ({}),
     },
     resolve: {
       type: Function as PropType<(value: unknown) => void>,

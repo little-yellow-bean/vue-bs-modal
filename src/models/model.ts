@@ -18,6 +18,7 @@ export const CONFIRM_OPTION_KEYS = [
 export const MODAL_OPTION_KEYS = [
   "content",
   "contentProps",
+  "contentEmits",
   "size",
   "center",
   "backgroundScrolling",
@@ -39,6 +40,7 @@ export interface ConfirmOption {
 export interface ModalOption {
   content: Component | string;
   contentProps?: Record<string, unknown>;
+  contentEmits?: Record<string, unknown>;
   size?: ModalSize;
   center?: boolean;
   backgroundScrolling?: boolean;

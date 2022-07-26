@@ -63,6 +63,9 @@ app.use(Modal).mount("#app");
           contentProps: {
             email: "example@example.com",
             username: "yellowbean",
+          },
+          // pass event listeners to the EditProfileComponent.
+          contentEmits: {
             onSubmit: this.onSubmitProfileForm
           },
           center: true, // default is false
