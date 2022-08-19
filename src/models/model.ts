@@ -1,4 +1,4 @@
-import { App, Component } from "vue";
+import { Component } from "vue";
 
 export const MODAL_DELAY = 500;
 export const INVALID_OPTIONS = "Invalid Options";
