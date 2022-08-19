@@ -1,6 +1,7 @@
-import { Component, App } from "vue";
+import { Component } from "vue";
+import { ModalPlugin } from '../src/models/model';
 
-declare interface ConfirmOption {
+export declare interface ConfirmOption {
   title?: string;
   message?: string;
   icon?: string;
@@ -12,7 +13,7 @@ declare interface ConfirmOption {
   displayCloseBtn?: boolean;
 }
 
-declare interface ModalOption {
+export declare interface ModalOption {
   content: Component | string;
   contentProps?: Record<string, unknown>;
   contentEmits?: Record<string, unknown>;
@@ -22,7 +23,7 @@ declare interface ModalOption {
   staticBackdrop?: boolean;
 }
 
-declare interface Modal {
+export declare interface Modal {
   readonly confirm: (
     options?: ConfirmOption,
     el?: HTMLElement
@@ -55,8 +56,6 @@ declare module "@vue/runtime-core" {
   }
 }
 
-declare const _default: {
-  install: (app: App) => void;
-};
+declare const _default: ModalPlugin;
 
 export default _default;

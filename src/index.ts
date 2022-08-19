@@ -5,10 +5,10 @@ if (typeof window !== "undefined" && window.Vue) {
   window.VbsModal = plugin;
 }
 
-export { ModalSize } from "./models/model";
+export { ConfirmOption, Modal, ModalOption, ModalSize } from "./models/model";
 
 export default {
-  install(app: App) {
+  install(app: App): void {
     setCurrentAppContext(app._context);
     app.config.globalProperties.$vbsModal = modal;
   },

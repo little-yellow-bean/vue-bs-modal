@@ -4,7 +4,7 @@ import {
   ComponentInternalInstance,
   createVNode,
   render,
-  VNode,
+  VNode
 } from "vue";
 
 import ModalComponent from "../components/modal.vue";
@@ -16,7 +16,7 @@ import {
   ModalOption,
   ModalRef,
   MODAL_DELAY,
-  MODAL_OPTION_KEYS,
+  MODAL_OPTION_KEYS
 } from "../models/model";
 
 let _context: AppContext;
@@ -117,7 +117,7 @@ export const modal: Modal = {
 };
 
 export default {
-  install(app: App) {
+  install(app: App): void {
     _context = app._context;
     app.config.globalProperties.$vbsModal = modal;
   },
