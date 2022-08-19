@@ -1,4 +1,4 @@
-import { Component } from "vue";
+import { App, Component } from "vue";
 
 export declare interface ConfirmOption {
   title?: string;
@@ -30,7 +30,6 @@ export declare interface Modal {
   readonly open: (options: ModalOption, el?: HTMLElement) => void;
   readonly close: () => void;
 }
-
 
 declare interface ModalPlugin {
   install: (app: App) => void;
