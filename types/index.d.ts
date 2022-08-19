@@ -1,5 +1,4 @@
 import { Component } from "vue";
-import { ModalPlugin } from '../src/models/model';
 
 export declare interface ConfirmOption {
   title?: string;
@@ -30,6 +29,11 @@ export declare interface Modal {
   ) => Promise<boolean>;
   readonly open: (options: ModalOption, el?: HTMLElement) => void;
   readonly close: () => void;
+}
+
+
+declare interface ModalPlugin {
+  install: (app: App) => void;
 }
 
 export declare enum ModalSize {

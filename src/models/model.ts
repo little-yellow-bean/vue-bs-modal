@@ -63,10 +63,6 @@ export interface Modal {
   readonly close: () => void;
 }
 
-export interface ModalPlugin {
-  install: (app: App) => void;
-}
-
 export enum ModalSize {
   SMALL = "modal-sm",
   LARGE = "modal-lg",
