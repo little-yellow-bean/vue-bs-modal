@@ -21,6 +21,7 @@ import {
 
 let _context: AppContext;
 const currentModalRefs: ModalRef[] = [];
+let closingModal: ModalRef | undefined;
 
 function confirm(
   options?: ConfirmOption,
@@ -47,8 +48,11 @@ function open(options: ModalOption, el: HTMLElement = document.body): void {
 }
 
 function close() {
-  const modalRef = currentModalRefs[currentModalRefs.length - 1];
-  modalRef?.close();
+  if (closingModal) {
+    return;
+  }
+  closingModal = currentModalRefs.pop();
+  closingModal?.close();
 }
 
 function renderModal(
@@ -82,7 +86,7 @@ function renderModal(
         render(null, host);
         vnode = undefined;
         this.host.remove();
-        currentModalRefs.pop();
+        closingModal = undefined;
       }, MODAL_DELAY);
     },
   };
