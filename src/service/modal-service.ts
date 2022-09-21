@@ -47,7 +47,7 @@ function open(options: ModalOption, el: HTMLElement = document.body): void {
 }
 
 function close() {
-  const modalRef = currentModalRefs.pop();
+  const modalRef = currentModalRefs[currentModalRefs.length - 1];
   modalRef?.close();
 }
 
@@ -82,6 +82,7 @@ function renderModal(
         render(null, host);
         vnode = undefined;
         this.host.remove();
+        currentModalRefs.pop();
       }, MODAL_DELAY);
     },
   };
