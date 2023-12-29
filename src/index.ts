@@ -11,5 +11,6 @@ export default {
   install(app: App): void {
     setCurrentAppContext(app._context);
     app.config.globalProperties.$vbsModal = modal;
+    app.provide('modal', modal);
   },
 };
